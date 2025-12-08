@@ -7,7 +7,7 @@ const founders = [
     role: "Technical Founder & CEO",
     avatar: "https://images.unsplash.com/photo-1570295999919-56ceb65706bc?w=400&h=400&fit=crop&crop=face",
     description: "Full-stack engineer & systems architect passionate about scalable EdTech solutions that transform African education through technology.",
-    linkedin: "https://linkedin.com/in/bisiriyu-abdullah",
+    linkedin: "https://linkedin.com/in/abdullahbisiriyu",
     twitter: "https://twitter.com/bisiriyu_dev"
   },
   {
@@ -15,7 +15,7 @@ const founders = [
     role: "Co-Founder & Education Lead",
     avatar: "https://images.unsplash.com/photo-1556155092-490a1ba16284?w=400&h=400&fit=crop&crop=face",
     description: "Seasoned educator and product strategist bringing real classroom insights to create intuitive, teacher-friendly digital tools.",
-    linkedin: "https://linkedin.com/in/bello-sherifdeen",
+    linkedin: "https://linkedin.com/in/sherifdeenbello",
     twitter: "https://twitter.com/bello_edu"
   }
 ];
