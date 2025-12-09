@@ -9,7 +9,7 @@ const projects = [
     icon: Home,
     gradient: 'from-emerald-500 to-teal-500',
     link: '#',
-    logo: '/src/assets/Vector.png',
+    logo: '/assets/Vector.png',
   },
   {
     title: 'Commerza',
@@ -24,7 +24,7 @@ const projects = [
     icon: Globe2,
     gradient: 'from-purple-500 to-pink-500',
     link: '#',
-    logo: '/src/assets/TBP_logo.jpeg',
+    logo: '/assets/TBP_logo.jpeg',
   },
 ];
 

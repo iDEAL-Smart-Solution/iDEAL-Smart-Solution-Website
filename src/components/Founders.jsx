@@ -6,7 +6,7 @@ const founders = [
   {
     name: "Bisiriyu Abdullah",
     role: "Technical Founder & CTO",
-    avatar: "/src/assets/Bigboss_passport.JPG",
+    avatar: "/assets/Bigboss_passport.JPG",
     description: "A passionate software engineer with proven track records building scalable technology solutions across different industries. Driven by the challenges students face in accessing opportunities, he works to create a future where African talent thrives through technology and innovation.",
     linkedin: "https://linkedin.com/in/abdullahbisiriyu",
     twitter: "https://twitter.com/bisiriyu_dev"
@@ -14,7 +14,7 @@ const founders = [
   {
     name: "Bello Sherifdeen",
     role: "Co-Founder (Product & Education) & CEO",
-    avatar: "/src/assets/sherifdeen's_passport.jpg",
+    avatar: "/assets/sherifdeen's_passport.jpg",
     description: "An experienced teacher, education strategist, and product manager who brings practical classroom insight into our products. Together, we combine technical expertise, product management excellence, and real teaching experience to build powerful, easy-to-use education technology systems that transform learning across Africa.",
     linkedin: "https://linkedin.com/in/sherifdeenbello",
     twitter: "https://twitter.com/bello_edu"

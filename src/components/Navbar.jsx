@@ -35,7 +35,7 @@ const Navbar = () => {
           whileHover={{ scale: 1.05 }}
         >
           <img 
-            src="/src/assets/iDEAL_logo.png" 
+            src="/assets/iDEAL_logo.png" 
             alt="iDEAL Smart Solution" 
             className="h-10 w-auto" 
           />
