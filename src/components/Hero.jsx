@@ -2,22 +2,92 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 md:pt-30 px-4">
-      {/* Animated Background Blobs */}
-      <div className="absolute inset-0 -z-10">
-        <motion.div
-          animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
-          transition={{ duration: 20, repeat: Infinity }}
-          className="absolute top-20 left-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{ x: [0, -150, 0], y: [0, 100, 0] }}
-          transition={{ duration: 25, repeat: Infinity }}
-          className="absolute bottom-20 right-20 w-80 h-80 bg-cyan-400/20 rounded-full blur-3xl"
-        />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-36 px-4 bg-slate-50">
+      {/* Tech Motion Graphics Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <svg className="absolute w-full h-full opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {/* Grid Lines */}
+          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#00a8e8" strokeWidth="0.1" opacity="0.5"/>
+          </pattern>
+          <rect width="100" height="100" fill="url(#grid)" />
+
+          {/* Animated Data Paths */}
+          <motion.path
+            d="M0 20 Q 25 20 40 40 T 80 40 T 100 60"
+            fill="none"
+            stroke="#00a8e8"
+            strokeWidth="0.3"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.path
+            d="M0 60 Q 30 60 50 40 T 100 20"
+            fill="none"
+            stroke="#00a8e8"
+            strokeWidth="0.3"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 5, delay: 1, repeat: Infinity, ease: "linear" }}
+          />
+          
+          {/* Circuit Nodes */}
+          {[
+            { cx: 10, cy: 20 }, { cx: 90, cy: 80 }, 
+            { cx: 20, cy: 80 }, { cx: 80, cy: 20 },
+            { cx: 50, cy: 10 }, { cx: 50, cy: 90 }
+          ].map((node, i) => (
+            <motion.circle
+              key={i}
+              cx={node.cx}
+              cy={node.cy}
+              r="1"
+              fill="#00a8e8"
+              initial={{ opacity: 0.3, scale: 1 }}
+              animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
+              transition={{ duration: 3, delay: i * 0.5, repeat: Infinity }}
+            />
+          ))}
+
+          {/* Connecting Lines for Nodes */}
+          <motion.path
+            d="M10 20 L 20 80 L 50 90 L 90 80 L 80 20 L 50 10 Z"
+            fill="none"
+            stroke="#00a8e8"
+            strokeWidth="0.1"
+            strokeDasharray="1 1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.1, 0.3, 0.1] }}
+            transition={{ duration: 5, repeat: Infinity }}
+          />
+        </svg>
+        
+        {/* Floating Hexagons */}
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={`hex-${i}`}
+            className="absolute border border-[#00a8e8]/20"
+            style={{
+              width: '100px',
+              height: '115px',
+              left: `${10 + i * 35}%`,
+              top: `${20 + (i % 2) * 40}%`,
+              clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+            }}
+            animate={{
+              rotate: 360,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              rotate: { duration: 20 + i * 5, repeat: Infinity, ease: "linear" },
+              scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+        ))}
       </div>
 
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="relative z-10 max-w-7xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,16 +117,10 @@ const Hero = () => {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <button 
-            className="btn-primary text-lg px-10 py-4 whitespace-nowrap"
-            onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-          >
+          <button className="btn-primary text-lg px-10 py-4 whitespace-nowrap">
             Request a Demo
           </button>
-          <button 
-            className="btn-secondary text-lg px-10 py-4"
-            onClick={() => document.getElementById('about').scrollIntoView({ behavior: 'smooth' })}
-          >
+          <button className="btn-secondary text-lg px-10 py-4">
             Learn More
           </button>
         </motion.div>
