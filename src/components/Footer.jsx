@@ -42,7 +42,7 @@ const Footer = () => {
             className="lg:col-span-1"
           >
             <img 
-              src="/src/assets/iDEAL_logo.png" 
+              src="/assets/iDEAL_logo.png" 
               alt="iDEAL Smart Solution" 
               className="h-14 w-auto mb-4 rounded-lg shadow-lg" 
             />
