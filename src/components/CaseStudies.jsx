@@ -1,123 +1,208 @@
 // src/components/CaseStudies.jsx
 import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
-import { School, Users, Cloud, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
-const highlights = [
-  { number: '6+', label: 'Active Schools', icon: School, color: 'from-blue-500 to-cyan-500' },
-  { number: '400+', label: 'Total Users', icon: Users, color: 'from-cyan-500 to-teal-500' },
-  { number: '', label: 'Multi-tenant Cloud Architecture', icon: Cloud, color: 'from-teal-500 to-green-500' },
-  { number: '', label: 'Scalable, Secure, and Reliable Performance', icon: ShieldCheck, color: 'from-green-500 to-emerald-500' },
+// ─── Case study data ───────────────────────────────────────────────────────
+//
+// Structure: Problem → Solution → Key Workflows → Engineering Capabilities → Result
+// Do not fabricate testimonials, customer names, or numerical outcomes.
+//
+const caseStudies = [
+  {
+    id: 'education-ecosystem',
+    label: 'Education Technology',
+    product: 'iDEAL Education Ecosystem',
+    accent: 'from-violet-500 to-purple-600',
+    accentLight: 'bg-violet-50 border-violet-100 text-violet-700',
+    problem:
+      'Schools were running exams on paper, managing results in spreadsheets, and had no unified view of student records across academic and administrative functions. Each school operated in isolation with no standardised tooling.',
+    solution:
+      'We built three interconnected platforms — a CBT exam platform, a multi-tenant school management portal, and a central Suite that manages identity, subscriptions, and platform-level operations. They are designed to work together but can also be adopted independently.',
+    workflows: [
+      'Exam creation, session management, grading, and result publication',
+      'Student admission, fee payment, and report card generation',
+      'Per-school branded portals with their own domain',
+      'A single student UIN recognised across CBT and Portal',
+      'Staff management, timetabling, and teaching resources',
+    ],
+    engineering: [
+      'Multi-tenant architecture with per-school data isolation',
+      'Three separate React SPAs sharing one ASP.NET Core API',
+      'Paystack school subaccounts for payment processing',
+      'Cloudflare R2 file storage',
+      'Role-based authorization across student, staff, parent, and admin roles',
+      'GitHub Actions CI/CD with VPS deployment',
+    ],
+    result:
+      'The ecosystem is live across 11+ schools with over 800 active users. Schools that adopt one product can onboard additional products without re-registering their students.',
+  },
+  {
+    id: 'saleshub',
+    label: 'Sales Operations',
+    product: 'iDEAL SalesHub',
+    accent: 'from-sky-500 to-cyan-600',
+    accentLight: 'bg-sky-50 border-sky-100 text-sky-700',
+    problem:
+      'A sales organisation needed to track distributed marketer activity, enforce an approval workflow for recorded sales, calculate commissions accurately on the server, and deliver timely notifications — without relying on manual spreadsheets or informal coordination.',
+    solution:
+      'We built SalesHub, a dedicated sales operations platform covering the full lifecycle from sale recording through to commission payout and KPI reporting. It serves marketers, distributors, marketing leads, and administrators in distinct role-separated workflows.',
+    workflows: [
+      'Marketers record sales; leads review and approve or reject',
+      'Refunds are logged with full audit trail',
+      'Commission and KPI calculations run server-side on approval',
+      'Email and in-app notifications on key status changes',
+      'Admin dashboard with operational reporting',
+    ],
+    engineering: [
+      '.NET 10 / ASP.NET Core backend with React + TypeScript frontend',
+      'PostgreSQL with Entity Framework Core',
+      'Hangfire for background job processing',
+      'JWT authentication with refresh token rotation',
+      'ASP.NET Identity for user management',
+      'OpenAPI / Scalar documentation',
+    ],
+    result:
+      'SalesHub is live and in active use, replacing manual tracking and informal coordination with a single, auditable platform.',
+  },
 ];
 
-const Counter = ({ target }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
+// ─── Card component ────────────────────────────────────────────────────────
 
-  useEffect(() => {
-    if (!target) return;
+const CaseStudyCard = ({ cs, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 32 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: index * 0.12, duration: 0.6 }}
+    className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
+  >
+    {/* Header bar */}
+    <div className={`h-1.5 bg-gradient-to-r ${cs.accent}`} />
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          let start = 0;
-          const end = parseInt(target);
-          const duration = 2000;
-          const increment = end / (duration / 20);
+    <div className="p-8 md:p-10">
+      {/* Label + product name */}
+      <div className="flex items-center gap-3 flex-wrap mb-6">
+        <span
+          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${cs.accentLight}`}
+        >
+          {cs.label}
+        </span>
+        <h3 className="text-xl font-bold text-gray-900">{cs.product}</h3>
+      </div>
 
-          const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-              setCount(end);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(start));
-            }
-          }, 20);
+      {/* Problem → Solution */}
+      <div className="grid md:grid-cols-2 gap-8 mb-8">
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+            The Problem
+          </p>
+          <p className="text-gray-700 text-sm leading-relaxed">{cs.problem}</p>
+        </div>
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+            Our Approach
+          </p>
+          <p className="text-gray-700 text-sm leading-relaxed">{cs.solution}</p>
+        </div>
+      </div>
 
-          return () => clearInterval(timer);
-        }
-      },
-      { threshold: 0.5 }
-    );
+      {/* Workflows + Engineering side by side */}
+      <div className="grid md:grid-cols-2 gap-8 mb-8 pt-6 border-t border-gray-100">
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
+            Key Workflows
+          </p>
+          <ul className="space-y-2">
+            {cs.workflows.map((w) => (
+              <li key={w} className="flex items-start gap-2 text-sm text-gray-600">
+                <CheckCircle
+                  className="w-4 h-4 text-[#00a8e8] flex-shrink-0 mt-0.5"
+                  strokeWidth={2}
+                />
+                {w}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
+            Engineering Capabilities
+          </p>
+          <ul className="space-y-2">
+            {cs.engineering.map((e) => (
+              <li key={e} className="flex items-start gap-2 text-sm text-gray-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00a8e8] flex-shrink-0 mt-1.5" />
+                {e}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  return (
-    <div ref={ref} className="text-5xl font-bold bg-gradient-to-r from-[#00a8e8] to-[#00c567] bg-clip-text text-transparent">
-      {count}{target.includes('+') ? '+' : ''}
+      {/* Result */}
+      <div className="bg-gray-50 border border-gray-100 rounded-xl p-5">
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+          Result
+        </p>
+        <p className="text-gray-700 text-sm leading-relaxed">{cs.result}</p>
+      </div>
     </div>
-  );
-};
+  </motion.div>
+);
+
+// ─── Section ───────────────────────────────────────────────────────────────
 
 const CaseStudies = () => {
   return (
-    <section id="case-studies" className="py-20 bg-white">
+    <section id="case-studies" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="max-w-3xl mb-16"
         >
-          <p className="section-subtitle">Our Impact</p>
-          <h2 className="section-title">Why Schools Trust iDEAL</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-4">
-            Proven results and trusted by Schools across Nigeria
+          <p className="section-subtitle">Case Studies</p>
+          <h2 className="section-title">Problems we have solved</h2>
+          <p className="text-lg text-gray-600 leading-relaxed mt-4">
+            Each case study shows the problem, how we approached it, the workflows we built,
+            the engineering decisions we made, and what the result was.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {highlights.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.6 }}
-                whileHover={{ y: -8, scale: 1.05 }}
-                className="card-modern text-center group"
-              >
-                {/* Icon with gradient background */}
-                <div className="relative mb-6">
-                  <div className={`w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br ${item.color} p-4 shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <Icon className="w-full h-full text-white" strokeWidth={1.5} />
-                  </div>
-                </div>
-                
-                {item.number ? (
-                  <Counter target={item.number} />
-                ) : (
-                  <div className={`text-5xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent h-16 flex items-center justify-center`}>
-                    <ShieldCheck className="w-12 h-12" strokeWidth={2.5} />
-                  </div>
-                )}
-                
-                <p className="text-lg text-gray-600 mt-4 leading-relaxed">{item.label}</p>
-              </motion.div>
-            );
-          })}
+        {/* Cards */}
+        <div className="flex flex-col gap-10">
+          {caseStudies.map((cs, i) => (
+            <CaseStudyCard key={cs.id} cs={cs} index={i} />
+          ))}
         </div>
 
-        {/* Additional trust indicators */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 text-center"
+          transition={{ delay: 0.4 }}
+          className="mt-14 pt-10 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-6"
         >
-          <div className="glass-card p-8 max-w-4xl mx-auto">
-            <p className="text-xl text-gray-700 leading-relaxed">
-              "iDEAL Smart Solution has revolutionized how we manage assessments and administrative tasks. 
-              The platform is <span className="text-[#00a8e8] font-semibold">reliable, secure, and easy to use</span> for both staff and students."
-            </p>
-            <p className="text-gray-600 mt-4 font-medium">— School Administrator, Ibadan</p>
-          </div>
+          <p className="text-gray-600 max-w-xl">
+            Have a problem that needs a software system? We'd like to understand it.
+          </p>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="btn-primary inline-flex items-center gap-2 group whitespace-nowrap"
+          >
+            Start a Project
+            <ArrowRight
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              strokeWidth={2.5}
+            />
+          </a>
         </motion.div>
       </div>
     </section>
