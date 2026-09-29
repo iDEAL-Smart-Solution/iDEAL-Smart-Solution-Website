@@ -76,7 +76,7 @@ const HowWeBuild = () => {
         </motion.div>
 
         {/* Steps */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 rounded-2xl overflow-hidden border border-white/10">
+        <div className="build-journey">
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (
@@ -86,14 +86,14 @@ const HowWeBuild = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="bg-gray-900 p-8 group hover:bg-gray-800/60 transition-colors duration-300"
+                className="build-stage group"
               >
                 {/* Number + Icon */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-4xl font-black text-white/10 group-hover:text-[#00a8e8]/20 transition-colors tabular-nums">
+                <div className="build-stage-head">
+                  <span className="build-number">
                     {step.number}
                   </span>
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#00a8e8]/10 group-hover:border-[#00a8e8]/20 transition-all duration-300">
+                  <div className="build-icon">
                     <Icon className="w-5 h-5 text-[#00a8e8]" strokeWidth={1.5} />
                   </div>
                 </div>

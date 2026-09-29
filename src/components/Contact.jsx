@@ -168,10 +168,10 @@ const Contact = () => {
         >
           <p className="text-[#00a8e8] text-lg font-semibold mb-2">Get In Touch</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Start a project with us
+            Have a system worth building?
           </h2>
           <p className="text-gray-400 text-lg leading-relaxed">
-            Tell us what you are building. We will respond to understand the problem
+            Tell us what you are trying to build. We will respond to understand the problem
             before talking about solutions.
           </p>
         </motion.div>

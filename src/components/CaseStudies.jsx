@@ -12,6 +12,7 @@ const caseStudies = [
     id: 'education-ecosystem',
     label: 'Education Technology',
     product: 'iDEAL Education Ecosystem',
+    screenshot: '/assets/screenshots/portal-dashboard.png',
     accent: 'from-violet-500 to-purple-600',
     accentLight: 'bg-violet-50 border-violet-100 text-violet-700',
     problem:
@@ -40,6 +41,7 @@ const caseStudies = [
     id: 'saleshub',
     label: 'Sales Operations',
     product: 'iDEAL SalesHub',
+    screenshot: '/assets/screenshots/saleshub-dashboard.png',
     accent: 'from-sky-500 to-cyan-600',
     accentLight: 'bg-sky-50 border-sky-100 text-sky-700',
     problem:
@@ -77,7 +79,7 @@ const CaseStudyCard = ({ cs, index }) => (
     className="bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
   >
     {/* Header bar */}
-    <div className={`h-1.5 bg-gradient-to-r ${cs.accent}`} />
+    <div className="case-visual"><img src={cs.screenshot} alt={`${cs.product} interface`} loading="lazy" /><span>Product interface / {cs.product}</span></div>
 
     <div className="p-8 md:p-10">
       {/* Label + product name */}

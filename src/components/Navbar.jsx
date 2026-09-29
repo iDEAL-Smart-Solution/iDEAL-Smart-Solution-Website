@@ -1,7 +1,7 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const navLinks = [
   { label: 'Home',         href: '#home' },
@@ -26,44 +26,41 @@ const Navbar = () => {
     setMobileMenuOpen(false);
     const id = href.replace('#', '');
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   };
 
   return (
+    <div className="ideal-nav-wrap">
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'glass-card shadow-xl py-3 mx-2 md:mx-4 mt-2 rounded-2xl md:rounded-3xl'
-          : 'py-4 md:py-6 bg-white/95 backdrop-blur-sm'
-      }`}
+      initial={{ y: -24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+      className={`ideal-nav ${scrolled ? 'is-scrolled' : ''}`}
+      aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
+      <div className="ideal-nav-bar">
         {/* Logo */}
         <motion.a
           href="#home"
           onClick={(e) => { e.preventDefault(); scrollTo('#home'); }}
-          className="flex items-center gap-2"
+          className="ideal-nav-brand"
           whileHover={{ scale: 1.03 }}
         >
           <img
             src="/assets/iDEAL_logo.png"
             alt="iDEAL Smart Solutions"
-            className="h-8 md:h-10 w-auto"
+            className="h-9 w-auto"
           />
         </motion.a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-7">
+        <div className="ideal-nav-links">
           {navLinks.map((link) => (
             <motion.a
               key={link.label}
               href={link.href}
               onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-              whileHover={{ y: -2 }}
-              className="text-gray-600 hover:text-[#00a8e8] font-medium transition-colors text-sm"
+              className="ideal-nav-link"
             >
               {link.label}
             </motion.a>
@@ -71,24 +68,18 @@ const Navbar = () => {
         </div>
 
         {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="ideal-nav-actions">
           <button
-            className="btn-secondary py-2 px-5 text-sm"
-            onClick={() => scrollTo('#products')}
-          >
-            Explore Our Products
-          </button>
-          <button
-            className="btn-primary py-2 px-5 text-sm"
+            className="ideal-nav-cta"
             onClick={() => scrollTo('#contact')}
           >
-            Start a Project
+            <span>Start a project</span><i><ArrowUpRight size={17} /></i>
           </button>
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          className="ideal-nav-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={mobileMenuOpen}
@@ -103,42 +94,37 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+          initial={{ opacity: 0, y: -8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-full left-2 right-2 mt-2 bg-white rounded-2xl shadow-xl p-5 border border-gray-100"
+            className="ideal-mobile-menu"
           >
-            <nav className="space-y-1" role="navigation">
+            <div className="ideal-mobile-links">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-                  className="block px-4 py-2.5 text-gray-700 hover:text-[#00a8e8] hover:bg-blue-50 rounded-xl font-medium transition-colors"
+                  className="ideal-mobile-link"
                 >
                   {link.label}
                 </a>
               ))}
-            </nav>
-            <div className="flex flex-col gap-2 mt-5 pt-5 border-t border-gray-100">
+            </div>
+            <div className="ideal-mobile-action">
               <button
-                className="btn-secondary w-full text-sm"
-                onClick={() => scrollTo('#products')}
-              >
-                Explore Our Products
-              </button>
-              <button
-                className="btn-primary w-full text-sm"
+                className="ideal-nav-cta"
                 onClick={() => scrollTo('#contact')}
               >
-                Start a Project
+                <span>Start a project</span><i><ArrowUpRight size={17} /></i>
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.nav>
+    </div>
   );
 };
 
